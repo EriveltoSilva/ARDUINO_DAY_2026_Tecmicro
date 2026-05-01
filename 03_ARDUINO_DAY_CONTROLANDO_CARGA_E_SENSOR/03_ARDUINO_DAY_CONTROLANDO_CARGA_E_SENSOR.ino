@@ -13,8 +13,8 @@
 // WIFI
 const char* ssid = "UNITEL NET CASA 2.4GHz_A886";
 const char* password = "474frut4mba";
-const char* GEMINI_API_KEY = "AIzaSyDOawXaJRDbWGrLk0LzEOqzv37fs2c4110";
-const char* MAX_TOKENS = "2000";
+const char* DEEPSEEK_API_KEY = "sk-1e35f2add99443ee8f1c1c1318aa6e3d";
+const int MAX_TOKENS = 2000;
 
 // String res = "";
 unsigned long int timeDelay = 0;
@@ -51,70 +51,50 @@ void connectWiFi() {
 //====================================================
 // Perguntar à IA
 //====================================================
-String askGemini(String question) {
+String askDeepSeek(String question) {
 
   readTemperature();
 
   HTTPClient https;
 
-  String url =
-    "https://generativelanguage.googleapis.com/v1beta/models/"
-    "gemini-2.5-flash:generateContent?key="
-    + String(GEMINI_API_KEY);
-
-  if (!https.begin(url)) {
+  if (!https.begin("https://api.deepseek.com/v1/chat/completions")) {
     return "ERROR_CONNECTION";
   }
 
   https.addHeader("Content-Type", "application/json");
+  https.addHeader("Authorization", "Bearer " + String(DEEPSEEK_API_KEY));
 
   // System role + pergunta
   String payload =
     "{"
-    "\"systemInstruction\":{"
-    "\"parts\":[{"
-    "\"text\":\""
-    "You are a smart assistant like Alexa. "
-
-    "You control hardware and answer questions naturally. "
-
-    "If the user wants to turn ON the LED, respond ONLY with LED_ON. "
-    "If the user wants to turn OFF the LED, respond ONLY with LED_OFF. "
-
-    "You also have access to real sensor data from the environment. "
-
-    "If the user asks about temperature, humidity, weather conditions, "
-    "or if it is hot/cold, use the sensor data provided in the prompt "
-    "to answer naturally. "
-
-    "Never invent sensor values."
-    "\""
-    "}]"
-    "},"
-
-    "\"contents\":[{"
-    "\"parts\":[{"
-    "\"text\":\""
-
-    "Sensor Data:\\n"
-    "Temperature: "
+    "\"model\":\"deepseek-chat\","
+    "\"messages\":["
+      "{\"role\":\"system\",\"content\":\""
+        "You are a smart assistant like Alexa. "
+        "You control hardware and answer questions naturally. "
+        "If the user wants to turn ON the LED, respond ONLY with LED_ON. "
+        "If the user wants to turn OFF the LED, respond ONLY with LED_OFF. "
+        "You also have access to real sensor data from the environment. "
+        "If the user asks about temperature, humidity, weather conditions, "
+        "or if it is hot/cold, use the sensor data provided in the prompt "
+        "to answer naturally. "
+        "Never invent sensor values."
+      "\"},"
+      "{\"role\":\"user\",\"content\":\""
+        "Sensor Data:\\n"
+        "Temperature: "
     + String(temperature) + " Celsius\\n"
-                            "Humidity: "
+        "Humidity: "
     + String(humidity) + " Percent\\n\\n"
-
-                         "User Question: "
+        "User Question: "
     + question +
-
-    "\""
-    "}]"
-    "}],"
-
-    "\"generationConfig\":{"
+      "\"}"
+    "],"
     "\"temperature\":0.2,"
-    "\"maxOutputTokens\":"
-    + String(MAX_TOKENS) + "}"
+    "\"max_tokens\":"
+    + String(MAX_TOKENS) +
+    "}";
 
-                           "}";
   int httpCode = https.POST(payload);
 
   if (httpCode != HTTP_CODE_OK) {
@@ -136,7 +116,7 @@ String askGemini(String question) {
     return "ERROR_JSON";
   }
 
-  String aiResponse = doc["candidates"][0]["content"]["parts"][0]["text"];
+  String aiResponse = doc["choices"][0]["message"]["content"];
 
   aiResponse.trim();
   return aiResponse;
@@ -230,7 +210,7 @@ void loop() {
     Serial.println(userQuestion);
 
     // Pergunta para a IA
-    String aiResponse = askGemini(userQuestion);
+    String aiResponse = askDeepSeek(userQuestion);
 
 
     //---------------------------------------------------
