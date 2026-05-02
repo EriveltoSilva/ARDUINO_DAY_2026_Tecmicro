@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-AO">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ARDUINO DAY | DUINO AI </title>
+  <link href="./dashboard.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <header>
+    <nav class="navbar">
+      <span class="brand">DUINO AI</span>
+      <a href="/login" class="nav-link">Sair</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="layout">
+      <!-- Coluna esquerda: cartões de sensores e LED -->
+      <div class="cards-area">
+
+        <div class="card card-blue">
+          <div class="card-icon">&#127777;</div>
+          <div class="card-content">
+            <h3 id="temperatureSensor">--.-</h3>
+            <p>Temperatura (°C)</p>
+          </div>
+        </div>
+
+        <div class="card card-orange">
+          <div class="card-icon">&#128167;</div>
+          <div class="card-content">
+            <h3 id="humiditySensor">--.-</h3>
+            <p>Humidade (%)</p>
+          </div>
+        </div>
+
+        <div class="card card-dark">
+          <div class="card-icon" id="ledIcon">&#128161;</div>
+          <div class="card-content">
+            <p>LED</p>
+            <button id="btnLed" class="btn btn-primary">LIGAR</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Coluna direita: chat com IA -->
+      <div class="chat-sidebar">
+        <div class="chat-header">
+          <span>DUINO AI Chat</span>
+          <small id="aiStatus">pronto</small>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+          <div class="message bot">
+            Olá! Sou o DUINO AI. Posso ligar/desligar o LED e responder às suas perguntas.
+          </div>
+        </div>
+
+        <div class="chat-input-area">
+          <input type="text" id="chatInput" placeholder="Escreva uma mensagem..." autocomplete="off" />
+          <button id="btnSend">Enviar</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 - Erivelto Silva - Direitos Reservados</p>
+  </footer>
+
+  <script src="./dashboard.js"></script>
+</body>
+
+</html>
