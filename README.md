@@ -29,6 +29,7 @@
   <li><a href="#collaborators">Collaborators</a></li>
   <li><a href="#license">License</a></li>
   <li><a href="#keywords">Key Words</a></li>
+  <li><a href="#references">References</a></li>
 </ol>
 
 ---
@@ -212,17 +213,63 @@ ESP32, Arduino, IoT, Artificial Intelligence, DeepSeek API, DHT11, Temperature, 
 
 
 <h2 id="references"> References</h2>
-<a href="https://lastminuteengineers.com/esp32-pinout-reference/">ESP32 Pinout Reference</a>
-<a href="https://randomnerdtutorials.com/installing-the-esp32-board-in-arduino-ide-windows-instructions/">Installing the ESP32 Board in Arduino IDE (Windows, Mac OS X, Linux)</a>
-<a href="https://randomnerdtutorials.com/install-esp32-filesystem-uploader-arduino-ide/">Install ESP32 Filesystem Uploader in Arduino IDE 1.19</a>
-<a href="https://randomnerdtutorials.com/arduino-ide-2-install-esp32-littlefs/">Arduino IDE 2: Install ESP32 LittleFS Uploader (Upload Files to the Filesystem)</a>
-<a href="https://github.com/earlephilhower/arduino-littlefs-upload/releases">LittleFS Uploader</a>
+
+<h3 id="cURL"> cURL to be imported on Postman</h3>
+
+1. Arduino_DAY_01_TESTE_DeepSeek_API
+
+```bash
+curl --location 'https://api.deepseek.com/v1/chat/completions' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer SEU_DEEPSEEK_API_KEY' \
+--data '{
+  "model": "deepseek-chat",
+  "messages": [
+    {
+      "role": "user",
+      "content": "HOW MUCH IS 2+9?"
+    }
+  ]
+}'
+```
+
+2.Arduino_DAY_01_TESTE_DeepSeek_API
+```bash
+curl --location 'https://api.deepseek.com/v1/chat/completions' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer SEU_DEEPSEEK_API_KEY' \
+--data '{
+  "model": "deepseek-chat",
+  "messages": [
+    {
+      "role": "system",
+      "content": "YOU ARE DUINO, A VIRTUAL ASSISTANT FOR ARDUINO DAY 2026. GIVE OBJECTIVE RESPONSES TO USERS."
+    },
+    {
+      "role": "user",
+      "content": "O ESP32 tem mais melhoria que o arduino?"
+    }
+  ],
+  "temperature": 0.2,
+  "max_tokens": 1000
+}'
+```
+
+
+<h2 id="references"> References</h2>
+
+- <a href="https://lastminuteengineers.com/esp32-pinout-reference/">ESP32 Pinout Reference</a>
+
+- <a href="https://randomnerdtutorials.com/installing-the-esp32-board-in-arduino-ide-windows-instructions/">Installing the ESP32 Board in Arduino IDE (Windows, Mac OS X, Linux)</a>
+
+- <a href="https://randomnerdtutorials.com/install-esp32-filesystem-uploader-arduino-ide/">Install ESP32 Filesystem Uploader in Arduino IDE 1.19</a>
+
+- <a href="https://randomnerdtutorials.com/arduino-ide-2-install-esp32-littlefs/">Arduino IDE 2: Install ESP32 LittleFS Uploader (Upload Files to the Filesystem)</a>
+
+- <a href="https://github.com/earlephilhower/arduino-littlefs-upload/releases">LittleFS Uploader</a>
+
+- <a href="https://platform.deepseek.com/usage">DeepSeek</a>
 
 Search for:
 - AsyncTCP by: ESP32Async
 - ESPAsyncWebServer by: ESP32Async
-
-
-
-
-
