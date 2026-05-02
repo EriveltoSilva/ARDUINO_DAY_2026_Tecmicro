@@ -11,13 +11,18 @@ const SYSTEM_PROMPT =
 
 // ---- DOM references ----
 const temperatureSensor = document.getElementById("temperatureSensor");
-const humiditySensor = document.getElementById("humiditySensor");
-const ledIcon = document.getElementById("ledIcon");
-const btnLed = document.getElementById("btnLed");
-const chatMessages = document.getElementById("chatMessages");
-const chatInput = document.getElementById("chatInput");
-const btnSend = document.getElementById("btnSend");
-const aiStatus = document.getElementById("aiStatus");
+const humiditySensor    = document.getElementById("humiditySensor");
+const tempBar           = document.getElementById("tempBar");
+const humidBar          = document.getElementById("humidBar");
+const ledBulb           = document.getElementById("ledBulb");
+const ledGlow           = document.getElementById("ledGlow");
+const ledBadge          = document.getElementById("ledBadge");
+const ledStateText      = document.getElementById("ledStateText");
+const btnLed            = document.getElementById("btnLed");
+const chatMessages      = document.getElementById("chatMessages");
+const chatInput         = document.getElementById("chatInput");
+const btnSend           = document.getElementById("btnSend");
+const aiStatus          = document.getElementById("aiStatus");
 
 let currentLedState = false;
 
@@ -31,25 +36,41 @@ window.addEventListener("load", () => {
 
 function receiveData() {
   fetch("/dados")
-    .then((resp) => resp.json())
-    .then((data) => {
-      temperatureSensor.textContent = data.temp.toFixed(1) + " °C";
-      humiditySensor.textContent = data.humidity.toFixed(1) + " %";
+    .then(resp => resp.json())
+    .then(data => {
+      temperatureSensor.textContent = data.temp.toFixed(1);
+      humiditySensor.textContent    = data.humidity.toFixed(1);
+
+      // progress bars: temp 0–50°C, humidity 0–100%
+      tempBar.style.width  = Math.min(Math.max(data.temp / 50 * 100, 0), 100) + "%";
+      humidBar.style.width = Math.min(Math.max(data.humidity, 0), 100) + "%";
+
       currentLedState = data.ledState;
-      updateLedButton();
+      updateLedUI();
     })
-    .catch((err) => console.error("Erro ao buscar dados:", err));
+    .catch(err => console.error("Erro ao buscar dados:", err));
 }
 
-function updateLedButton() {
+function updateLedUI() {
   if (currentLedState) {
-    btnLed.textContent = "APAGAR";
-    btnLed.className = "btn btn-danger";
-    ledIcon.style.opacity = "1";
+    btnLed.textContent    = "&#9646; APAGAR";
+    btnLed.innerHTML      = "&#9646; APAGAR";
+    btnLed.className      = "btn btn-danger";
+    ledBulb.classList.add("on");
+    ledGlow.classList.add("on");
+    ledBadge.textContent  = "ON";
+    ledBadge.className    = "card-badge on";
+    ledStateText.textContent = "Ligado";
+    ledStateText.className   = "led-state on";
   } else {
-    btnLed.textContent = "LIGAR";
-    btnLed.className = "btn btn-primary";
-    ledIcon.style.opacity = "0.35";
+    btnLed.innerHTML      = "&#9654; LIGAR";
+    btnLed.className      = "btn btn-primary";
+    ledBulb.classList.remove("on");
+    ledGlow.classList.remove("on");
+    ledBadge.textContent  = "OFF";
+    ledBadge.className    = "card-badge";
+    ledStateText.textContent = "Desligado";
+    ledStateText.className   = "led-state";
   }
 }
 
@@ -59,31 +80,33 @@ function updateLedButton() {
 btnLed.addEventListener("click", () => {
   const url = currentLedState ? "/led/off" : "/led/on";
   fetch(url)
-    .then((resp) => resp.json())
+    .then(resp => resp.json())
     .then(() => receiveData())
-    .catch((err) => console.error("Erro ao controlar LED:", err));
+    .catch(err => console.error("Erro ao controlar LED:", err));
 });
 
 // ======================================================
 // Chat helpers
 // ======================================================
 function addMessage(text, role) {
-  const div = document.createElement("div");
-  div.className = "message " + role;
-  div.textContent = text;
-  chatMessages.appendChild(div);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-  return div;
-}
+  const wrapper = document.createElement("div");
+  wrapper.className = "message " + role;
 
-function setAiStatus(text) {
-  aiStatus.textContent = text;
+  const bubble = document.createElement("div");
+  bubble.className = "msg-bubble";
+  bubble.textContent = text;
+
+  wrapper.appendChild(bubble);
+  chatMessages.appendChild(wrapper);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+  return wrapper;
 }
 
 function setBusy(busy) {
-  btnSend.disabled = busy;
+  btnSend.disabled   = busy;
   chatInput.disabled = busy;
-  setAiStatus(busy ? "a pensar..." : "pronto");
+  aiStatus.textContent = busy ? "a pensar..." : "pronto para ajudar";
+  aiStatus.className   = busy ? "chat-subtitle busy" : "chat-subtitle";
 }
 
 // ======================================================
@@ -91,7 +114,7 @@ function setBusy(busy) {
 // ======================================================
 btnSend.addEventListener("click", sendMessage);
 
-chatInput.addEventListener("keydown", (e) => {
+chatInput.addEventListener("keydown", e => {
   if (e.key === "Enter") sendMessage();
 });
 
@@ -109,40 +132,36 @@ function sendMessage() {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + DEEPSEEK_API_KEY,
+      "Authorization": "Bearer " + DEEPSEEK_API_KEY
     },
     body: JSON.stringify({
       model: "deepseek-chat",
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
-        { role: "user", content: text },
+        { role: "user",   content: text }
       ],
       temperature: 0.2,
-      max_tokens: 500,
-    }),
+      max_tokens: 500
+    })
   })
-    .then((resp) => resp.json())
-    .then((data) => {
+    .then(resp => resp.json())
+    .then(data => {
       thinking.remove();
       setBusy(false);
 
       const reply = data.choices[0].message.content.trim();
 
       if (reply === "LED_ON") {
-        fetch("/led/on")
-          .then(() => receiveData())
-          .catch((err) => console.error(err));
+        fetch("/led/on").then(() => receiveData()).catch(console.error);
         addMessage("LED ligado!", "bot");
       } else if (reply === "LED_OFF") {
-        fetch("/led/off")
-          .then(() => receiveData())
-          .catch((err) => console.error(err));
+        fetch("/led/off").then(() => receiveData()).catch(console.error);
         addMessage("LED desligado!", "bot");
       } else {
         addMessage(reply, "bot");
       }
     })
-    .catch((err) => {
+    .catch(err => {
       thinking.remove();
       setBusy(false);
       addMessage("Erro ao contactar a IA. Verifique a sua chave API.", "bot");
