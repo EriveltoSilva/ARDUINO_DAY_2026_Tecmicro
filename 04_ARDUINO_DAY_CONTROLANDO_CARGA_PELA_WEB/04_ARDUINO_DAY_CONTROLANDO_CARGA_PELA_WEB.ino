@@ -2,6 +2,7 @@
 #include "SPIFFS.h"
 #include <Arduino.h>
 #include <WiFi.h>
+#include <ESPmDNS.h>
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 
@@ -148,7 +149,24 @@ void setup() {
   Serial.println("SPIFFS montado.");
 
   serverHandlers();
-  Serial.println("DUINO AI Web Server a correr.");
+
+  // Set up mDNS responder:
+  // - first argument is the domain name, in this example
+  //   the fully-qualified domain name is "esp32.local"
+  // - second argument is the IP address to advertise
+  //   we send our IP address on the WiFi network
+  if (!MDNS.begin("duinoai")) {
+    Serial.println("Error setting up MDNS responder!");
+    while (1) {
+      delay(1000);
+    }
+  }
+  Serial.println("mDNS responder started");
+
+  // Add service to MDNS-SD
+  MDNS.addService("http", "tcp", 80);
+
+  Serial.println("Servidor Web do DUINO AI a correr.");
 }
 
 
