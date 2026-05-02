@@ -209,3 +209,20 @@ This project is licensed under the [MIT License](LICENSE) — Erivelto Silva.
 <h2 id="keywords">🔑 Key Words</h2>
 
 ESP32, Arduino, IoT, Artificial Intelligence, DeepSeek API, DHT11, Temperature, Humidity, LED Control, SPIFFS, ESPAsyncWebServer, Web Dashboard, AI Chat, Alexa, Conversation Memory, mDNS, Arduino Days 2026, Tecmicro, Angola, Maker, Open Source, Embedded Systems.
+
+
+<h2 id="references"> References</h2>
+<a href="https://lastminuteengineers.com/esp32-pinout-reference/">ESP32 Pinout Reference</a>
+<a href="https://randomnerdtutorials.com/installing-the-esp32-board-in-arduino-ide-windows-instructions/">Installing the ESP32 Board in Arduino IDE (Windows, Mac OS X, Linux)</a>
+<a href="https://randomnerdtutorials.com/install-esp32-filesystem-uploader-arduino-ide/">Install ESP32 Filesystem Uploader in Arduino IDE 1.19</a>
+<a href="https://randomnerdtutorials.com/arduino-ide-2-install-esp32-littlefs/">Arduino IDE 2: Install ESP32 LittleFS Uploader (Upload Files to the Filesystem)</a>
+<a href="https://github.com/earlephilhower/arduino-littlefs-upload/releases">LittleFS Uploader</a>
+
+Search for:
+- AsyncTCP by: ESP32Async
+- ESPAsyncWebServer by: ESP32Async
+
+
+
+
+
