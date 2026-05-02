@@ -69,6 +69,12 @@ void serverHandlers() {
   server.on("/dashboard.js", HTTP_GET, [](AsyncWebServerRequest *request) {
     request->send(SPIFFS, "/dashboard.js", "text/javascript");
   });
+  server.on("/Arduino_DAYS2026_Logo.png", HTTP_GET, [](AsyncWebServerRequest *request) {
+    request->send(SPIFFS, "/Arduino_DAYS2026_Logo.png", "image/png");
+  });
+  server.on("/Tecmicro-logo.png", HTTP_GET, [](AsyncWebServerRequest *request) {
+    request->send(SPIFFS, "/Tecmicro-logo.png", "image/png");
+  });
 
   // --- Páginas ---
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {

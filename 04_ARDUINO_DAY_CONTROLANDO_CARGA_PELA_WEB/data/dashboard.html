@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-AO">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>DUINO AI | Arduino Day</title>
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
   <link href="./dashboard.css" rel="stylesheet">
 </head>
+
 <body>
 
   <!-- Navbar -->
@@ -14,7 +17,10 @@
     <nav class="navbar">
       <div class="nav-brand">
         <span class="brand-name">DUINO<span class="accent"> AI</span></span>
-        <span class="brand-sub">Arduino Day 2025</span>
+        <span class="brand-sub">ESP32 &mdash; Arduino Days 2026</span>
+      </div>
+      <div class="nav-center">
+        <img src="./Arduino_DAYS2026_Logo.png" alt="Arduino Days 2026" class="nav-arduino-logo">
       </div>
       <div class="nav-right">
         <span class="status-dot"></span>
@@ -110,21 +116,17 @@
         <div class="chat-messages" id="chatMessages">
           <div class="message bot">
             <div class="msg-bubble">
-              Olá! Sou o <strong>DUINO AI</strong>. Posso ligar/desligar o LED e responder às suas perguntas sobre o ambiente.
+              Olá! Sou o <strong>DUINO AI</strong>. Posso ligar/desligar o LED e responder às suas perguntas sobre o
+              ambiente.
             </div>
           </div>
         </div>
 
         <div class="chat-input-area">
-          <input
-            type="text"
-            id="chatInput"
-            placeholder="Digite um comando ou pergunta..."
-            autocomplete="off"
-          />
+          <input type="text" id="chatInput" placeholder="Digite um comando ou pergunta..." autocomplete="off" />
           <button id="btnSend" title="Enviar">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/>
+              <path d="M2 21l21-9L2 3v7l15 2-15 2v7z" />
             </svg>
           </button>
         </div>
@@ -135,12 +137,17 @@
 
   <footer>
     <div class="footer-inner">
-      <span class="footer-logo">&#9110;</span>
-      <span>&copy; 2025 Erivelto Silva &mdash; Arduino Day</span>
-      <span class="footer-logo">&#9110;</span>
+      <span>&copy; 2026 Erivelto da Costa e Silva &mdash; Arduino Days</span>
+      <div class="footer-sponsor">
+        <span class="sponsor-label">Patrocinado por</span>
+        <a href="https://tecmicro.ao">
+          <img src="./Tecmicro-logo.png" alt="Tecmicro" class="footer-tecmicro-logo">
+        </a>
+      </div>
     </div>
   </footer>
 
   <script src="./dashboard.js"></script>
 </body>
+
 </html>

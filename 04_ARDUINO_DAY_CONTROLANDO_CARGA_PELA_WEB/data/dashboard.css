@@ -142,6 +142,48 @@ body {
   box-shadow: 0 0 10px var(--accent-dim);
 }
 
+/* ---- Navbar center logo ---- */
+.nav-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+}
+
+.nav-arduino-logo {
+  height: 34px;
+  width: auto;
+  background: #fff;
+  border-radius: 8px;
+  padding: 3px 8px;
+  display: block;
+}
+
+/* ---- Footer sponsor ---- */
+.footer-sponsor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sponsor-label {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.footer-tecmicro-logo {
+  height: 26px;
+  width: 26px;
+  border-radius: 50%;
+  background: #fff;
+  padding: 2px;
+  display: block;
+}
+
 /* ============================================================
    LAYOUT
    ============================================================ */
@@ -618,18 +660,13 @@ footer {
 .footer-inner {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 10px;
-  padding: 10px;
+  padding: 10px 20px;
   color: var(--text-dim);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-family: var(--font-mono);
   letter-spacing: 1px;
-}
-
-.footer-logo {
-  color: var(--accent);
-  opacity: .5;
 }
 
 /* ============================================================
