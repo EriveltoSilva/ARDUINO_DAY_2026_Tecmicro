@@ -6,6 +6,7 @@
   <img src="./04_ARDUINO_DAY_CONTROLANDO_CARGA_PELA_WEB/data/Tecmicro-logo.png" alt="Tecmicro" height="80"/>
 </p>
 
+
 <p align="center">
   <a href="https://www.linkedin.com/in/erivelto-silva-39a61a275"><img src="https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg"/></a>
   &ensp;&nbsp;
@@ -17,6 +18,11 @@
   &ensp;&nbsp;
   <img src="https://img.shields.io/badge/AI-DeepSeek-blueviolet?style=for-the-badge"/>
 </p>
+
+<p align="center">
+  <img src="./docs/event_poster.png" alt="Arduino Day 2026 — Tecmicro Event Poster" width="720"/>
+</p>
+
 
 `Menu:`
 <ol>
@@ -46,6 +52,8 @@
 </p>
 
 > Get your DeepSeek API key at **[platform.deepseek.com](https://platform.deepseek.com)**
+
+> 📄 Full presentation material: **[Arduino + IoT + GenAI (PDF)](./docs/Arduino_mais_IoT_mais_GenAI.pdf)**
 
 ---
 
@@ -268,8 +276,4 @@ curl --location 'https://api.deepseek.com/v1/chat/completions' \
 
 - <a href="https://github.com/earlephilhower/arduino-littlefs-upload/releases">LittleFS Uploader</a>
 
-- <a href="https://platform.deepseek.com/usage">DeepSeek</a>
-
-Search for:
-- AsyncTCP by: ESP32Async
-- ESPAsyncWebServer by: ESP32Async
+- <a href="https://platform.deepseek.com/usage">DeepSeek Platform</a>
